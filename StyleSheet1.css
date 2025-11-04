@@ -1,0 +1,378 @@
+﻿/* ============================= CSS RESET ============================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================= BASE ============================= */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    color: #f5f5f5;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* ============================= HEADER ============================= */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    background: rgba(28, 28, 28, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid #c00;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.brand img {
+    height: 150px;
+    width: auto;
+}
+
+.nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav a {
+    color: #f5f5f5;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+    .nav a:hover,
+    .nav a:focus {
+        color: #c00;
+        transform: scale(1.05);
+    }
+
+/* ============================= BOTÕES ============================= */
+.btn {
+    background: #c00;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+    .btn:hover,
+    .btn:focus {
+        background: #ff1919;
+        box-shadow: 0 0 20px rgba(255, 25, 25, .5);
+        transform: translateY(-2px);
+    }
+
+.ghost {
+    border: 1px solid #c00;
+    color: #c00;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: .3s;
+}
+
+    .ghost:hover,
+    .ghost:focus {
+        background: #c00;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(255, 25, 25, .5);
+        transform: translateY(-2px);
+    }
+
+/* ============================= HERO ============================= */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background: linear-gradient(135deg, #0a0a0a, #111111);
+    color: #fff;
+    overflow: hidden;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+    text-shadow: 0 0 15px rgba(0, 201, 167, 0.7);
+}
+
+.hero-sub {
+    font-size: 1.6rem;
+    color: #ccc;
+    animation: fadeInUp 1.2s ease forwards;
+    opacity: 0;
+}
+
+/* ============================= ANIMAÇÕES ============================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================= SEÇÕES ============================= */
+.services {
+    padding: 80px 15px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+    text-align: center;
+}
+
+    .services.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+/* ============================= LINHAS VERMELHAS ============================= */
+.services-title,
+.category-title,
+.services-title {
+    display: inline-block;
+    position: relative;
+    color: #fff;
+}
+
+    .services-title::after,
+    .category-title::after,
+    .services-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background-color: #c00;
+        border-radius: 2px;
+        margin: 10px auto 0 auto;
+    }
+
+/* ============================= CARDS ============================= */
+.services.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+    justify-items: center;
+}
+
+.card-flip {
+    width: 250px;
+    text-align: center;
+    perspective: 1000px;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    min-height: 160px;
+    text-align: center;
+    transition: transform .8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .4);
+}
+
+.card-front {
+    background: rgba(44,44,44,0.9);
+    color: #fff;
+}
+
+.card-back {
+    background: #c00;
+    color: #fff;
+    transform: rotateY(180deg);
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+/* ============================= FLOATING LINKS ============================= */
+.floating-links {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+}
+
+    .floating-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 1.4rem;
+        background: #c00;
+        box-shadow: 0 0 15px rgba(255, 25, 25, .5);
+        transition: .3s;
+    }
+
+        .floating-links a:hover {
+            background: #ff1919;
+            transform: translateY(-3px);
+        }
+
+/* ============================= FOOTER ============================= */
+footer {
+    background: rgba(28, 28, 28, 0.95);
+    text-align: center;
+    padding: 25px;
+    border-top: 2px solid #c00;
+    backdrop-filter: blur(8px);
+}
+
+/* ============================= MAPA ============================= */
+.map-responsive {
+    position: relative;
+    width: 100%;
+    min-height: 700px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .2);
+    margin-bottom: 20px;
+}
+
+    .map-responsive iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+/* ============================= MOBILE RESPONSIVO ============================= */
+@media (max-width: 768px) {
+    /* HEADER */
+    header {
+        flex-direction: column !important;
+        padding: 15px 0 !important;
+        align-items: center;
+    }
+
+    .brand img {
+        height: 100px !important;
+        width: auto !important;
+    }
+
+    .nav ul {
+        flex-direction: column !important;
+        gap: 15px !important;
+        margin-top: 15px !important;
+        align-items: center !important;
+    }
+
+    .nav a {
+        font-size: 1.1rem !important;
+    }
+
+    /* HERO */
+    .hero {
+        flex-direction: column !important;
+        gap: 30px !important;
+        min-height: 80vh !important;
+        padding: 60px 15px !important;
+    }
+
+    .hero-title {
+        font-size: 2.2rem !important;
+        text-align: center !important;
+    }
+
+    .hero-sub {
+        font-size: 1.1rem !important;
+        text-align: center !important;
+    }
+
+    .slide-btn {
+        font-size: 1.5rem !important;
+        padding: 8px 12px !important;
+        left: 10px !important;
+        right: 10px !important;
+    }
+
+    /* CARDS */
+    .services .cards,
+    .cards {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 25px !important;
+        justify-items: center !important;
+    }
+
+    .card-flip {
+        width: 100% !important;
+        max-width: 320px !important;
+        margin: 0 auto !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .card-inner {
+        height: auto !important;
+        min-height: 220px !important;
+    }
+
+    /* SEPARADORES E TÍTULOS */
+    .services-title,
+    .services-title,
+    .category-title {
+        font-size: 1.8rem !important;
+    }
+
+    .services-sub {
+        font-size: 1rem !important;
+    }
+
+    .category-separator {
+        width: 60px !important;
+    }
+
+    /* MAPA */
+    .map-responsive {
+        min-height: 400px !important;
+    }
+}

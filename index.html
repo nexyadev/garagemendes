@@ -1,0 +1,1178 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garagem Mendes — Performance Premium</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+
+
+    <style>
+        /* ============================= CSS ============================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg,#1a1a1a,#2c2c2c);
+            color: #f5f5f5;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            background: rgba(28,28,28,0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid #c00;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand img {
+            height: 150px;
+            width: auto;
+            transition: transform .3s, box-shadow .3s;
+        }
+
+
+
+        .nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+            .nav a:hover {
+                color: #c00;
+                transform: scale(1.05);
+            }
+
+        .btn {
+            background: #c00;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+            .btn:hover {
+                background: #ff1919;
+                box-shadow: 0 0 20px rgba(255,25,25,.5);
+                transform: translateY(-2px);
+            }
+
+        .ghost {
+            border: 1px solid #c00;
+            color: #c00;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+            .ghost:hover {
+                background: #c00;
+                color: #fff;
+                box-shadow: 0 0 15px rgba(255,25,25,.5);
+                transform: translateY(-2px);
+            }
+
+        /* HERO */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px;
+            gap: 50px;
+            background: linear-gradient(135deg,#111,#222);
+            position: relative;
+        }
+
+        .hero-left {
+            max-width: 500px;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .hero-dot {
+            color: #c00;
+            font-weight: 900;
+            margin-left: 5px;
+        }
+
+        .hero-sub {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .hero-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 360px;
+            width: 100%;
+        }
+
+            .hero-card img {
+                width: 100%;
+                border-radius: 20px;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+                transition: opacity 0.5s ease-in-out;
+            }
+
+        .slide-btn {
+            position: absolute;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            font-size: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background .3s;
+            z-index: 10;
+        }
+
+            .slide-btn:hover {
+                background: rgba(200,0,0,0.8);
+            }
+
+            .slide-btn.left {
+                left: -50px;
+            }
+
+            .slide-btn.right {
+                right: -50px;
+            }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #555;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background .3s;
+        }
+
+            .dot.active {
+                background: #c00;
+            }
+
+        /* SEÇÕES */
+        .section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+            .section.in-view {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .section h2, .section h3 {
+                color: #fff;
+            }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+            gap: 25px;
+        }
+
+        .card-flip {
+            perspective: 1000px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+            .card-flip.in-view {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 130px;
+            text-align: center;
+            transition: transform .8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card-flip:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            border-radius: 15px;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.4);
+            gap: 10px;
+        }
+
+        .card-front {
+            background: rgba(44,44,44,0.9);
+            color: #fff;
+        }
+
+            .card-front i {
+                color: #c00;
+                font-size: 1.4rem;
+                min-width: 25px;
+                text-align: center;
+                transition: transform .3s,color .3s;
+            }
+
+        .card-flip:hover .card-front i {
+            transform: rotate(15deg) scale(1.2);
+            color: #ff1919;
+        }
+
+        .card-back {
+            background: #c00;
+            color: #fff;
+            transform: rotateY(180deg);
+            font-size: .95rem;
+            line-height: 1.3;
+        }
+
+        /* CARDS 3D FLIP */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+            gap: 25px;
+        }
+
+        .card-flip {
+            perspective: 1000px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+            .card-flip.in-view {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 130px;
+            text-align: center;
+            transition: transform .8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card-flip:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            border-radius: 15px;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.4);
+            gap: 10px;
+        }
+
+        .card-front {
+            background: rgba(44,44,44,0.9);
+            color: #fff;
+        }
+
+            .card-front i {
+                color: #c00;
+                font-size: 1.4rem;
+                min-width: 25px;
+                text-align: center;
+                transition: transform 0.3s, color 0.3s;
+            }
+
+        .card-flip:hover .card-front i {
+            transform: rotate(15deg) scale(1.2);
+            color: #ff1919;
+        }
+
+        .card-back {
+            background: #c00;
+            color: #fff;
+            transform: rotateY(180deg);
+            font-size: .95rem;
+            line-height: 1.3;
+        }
+
+        /* SLIDER DE DEPOIMENTOS */
+        .slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: rgba(28,28,28,0.8);
+            border-radius: 10px;
+        }
+
+        /* FLOATING WA E INSTAGRAM */
+        .floating-links {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+            .floating-links a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                color: #fff;
+                font-size: 1.4rem;
+                text-decoration: none;
+                background: #c00;
+                box-shadow: 0 0 15px rgba(255,25,25,.5);
+                transition: .3s;
+            }
+
+                .floating-links a:hover {
+                    background: #ff1919;
+                    transform: translateY(-3px);
+                }
+
+        /* FOOTER */
+        footer {
+            background: rgba(28,28,28,0.95);
+            text-align: center;
+            padding: 25px;
+            border-top: 2px solid #c00;
+            backdrop-filter: blur(8px);
+        }
+
+        /* RESPONSIVO */
+        @media(max-width:768px) {
+            .hero {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container header-inner">
+            <div class="brand"><img src="logonova.png" alt="Garagem Mendes" class="logo"></div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#oficina">Oficina</a></li>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="hero-left">
+            <h1 class="hero-title">O Padrão de Confiança e Alto Desempenho.<span class="hero-dot">.</span></h1>
+            <p class="hero-sub">Mecânica premium. Excelência em cada detalhe. O mais alto padrão em cuidado automotivo.</p>
+        </div>
+        <div class="hero-card">
+            <button class="slide-btn left" onclick="anterior()">&#10094;</button>
+            <img id="slide-image" src="carrolap.png" alt="Carro Premium">
+            <button class="slide-btn right" onclick="proximo()">&#10095;</button>
+            <div class="dots" id="dots"></div>
+        </div>
+
+        <!-- Bolinhas -->
+        <div class="dots" id="dots">
+        </div>
+    </section>
+    <!-- CSS da seção -->
+    <style>
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px;
+            gap: 50px;
+            background: linear-gradient(135deg, #111, #222);
+            position: relative;
+        }
+
+        .hero-left {
+            max-width: 500px;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .hero-dot {
+            display: inline-block;
+            color: #c00;
+            font-weight: 900;
+            margin-left: 5px;
+        }
+
+        .hero-sub {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .hero-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 360px;
+            width: 100%;
+        }
+
+            .hero-card img {
+                width: 100%;
+                border-radius: 20px;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+                transition: opacity 0.5s ease-in-out;
+            }
+
+        .slide-btn {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            font-size: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+
+            .slide-btn:hover {
+                background: rgba(200, 0, 0, 0.8);
+            }
+
+            .slide-btn.left {
+                left: -50px;
+            }
+
+            .slide-btn.right {
+                right: -50px;
+            }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #555;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .dot.active {
+                background: #c00;
+            }
+
+        /* Responsivo */
+        @media(max-width:1024px) {
+            .hero {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .slide-btn.left {
+                left: 10px;
+            }
+
+            .slide-btn.right {
+                right: 10px;
+            }
+        }
+
+        @media(max-width:480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-sub {
+                font-size: 1rem;
+            }
+
+            .slide-btn {
+                font-size: 1.5rem;
+                padding: 8px 12px;
+            }
+
+            .dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+
+    <!-- SCRIPT DO CARROSSEL -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const imagens = ["carrolap.png", "pinças.png", "bloco.png", "oleocar.png"];
+            let index = 0;
+
+            const imgElement = document.getElementById("slide-image");
+            const dotsContainer = document.getElementById("dots");
+
+            // Garante que não existam bolinhas duplicadas
+            dotsContainer.innerHTML = "";
+
+            // Cria exatamente 4 bolinhas com base nas imagens
+            imagens.forEach((_, i) => {
+                const dot = document.createElement("div");
+                dot.classList.add("dot");
+                dot.onclick = () => irPara(i);
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = document.querySelectorAll(".dot");
+
+            function atualizarDots() {
+                dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
+            }
+
+            atualizarDots(); // Inicializa as bolinhas
+
+            window.proximo = function () {
+                index = (index + 1) % imagens.length;
+                trocarImagem();
+            };
+
+            window.anterior = function () {
+                index = (index - 1 + imagens.length) % imagens.length;
+                trocarImagem();
+            };
+
+            function irPara(i) {
+                index = i;
+                trocarImagem();
+            }
+
+            function trocarImagem() {
+                imgElement.style.opacity = 0;
+                setTimeout(() => {
+                    imgElement.src = imagens[index];
+                    imgElement.style.opacity = 1;
+                    atualizarDots();
+                }, 200);
+            }
+
+            // Troca automática
+            let intervalo = setInterval(proximo, 4000);
+            const slider = document.querySelector(".hero-card");
+            slider.addEventListener("mouseenter", () => clearInterval(intervalo));
+            slider.addEventListener("mouseleave", () => intervalo = setInterval(proximo, 4000));
+        });
+    </script>
+
+
+    <!-- SERVIÇOS -->
+    <services id="services" class="section services">
+        <div class="container">
+            <!-- Título principal com linha vermelha animada -->
+            <h2 class="services-title">Nossos Serviços</h2>
+            <hr class="category-separator">
+
+            <!-- Parágrafo centralizado -->
+            <p class="services-sub">Conheça um pouco mais dos nossos serviços prestados em nossa oficina.</p>
+
+            <!-- MOTOR -->
+            <h3 class="category-title">Motor</h3>
+            <hr class="category-separator">
+            <div class="cards">
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-oil-can"></i> Troca de Óleo</div>
+                        <div class="card-back">Substituição do óleo do motor garantindo máxima performance e proteção.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-bolt"></i> Troca de Velas de Ignição</div>
+                        <div class="card-back">Velas novas aumentam eficiência da ignição e desempenho do motor.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-cogs"></i> Troca de Correia Dentada</div>
+                        <div class="card-back">Substituição preventiva para evitar danos graves ao motor.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-tint"></i> Limpeza de Bicos Injetores</div>
+                        <div class="card-back">Limpeza completa para melhor combustão e desempenho do veículo.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-tint"></i> Limpeza de TBI e Sistema</div>
+                        <div class="card-back">Manutenção do corpo de borboleta e sistema de alimentação para máxima performance.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-fire"></i> Descarbonização de Válvulas</div>
+                        <div class="card-back">Remoção de resíduos garantindo potência máxima do motor.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-cogs"></i> Troca de Embreagem</div>
+                        <div class="card-back">Substituição de embreagem desgastada para desempenho ideal.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-tint"></i> Troca de Fluidos e Aditivos</div>
+                        <div class="card-back">Manutenção dos fluidos garantindo proteção e durabilidade do motor.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUSPENSÃO E FREIOS -->
+            <h3 class="category-title">Suspensão e Freios</h3>
+            <hr class="category-separator">
+            <div class="cards">
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-car-side"></i> Suspensão</div>
+                        <div class="card-back">Revisão completa da suspensão garantindo conforto e segurança.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-car-crash"></i> Sistema de Freios (Discos e Tambores)</div>
+                        <div class="card-back">Discos e tambores revisados para máxima segurança.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-car-alt"></i> Amortecedores</div>
+                        <div class="card-back">Substituição de amortecedores para garantir estabilidade e conforto.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-align-left"></i> Alinhamento</div>
+                        <div class="card-back">Precisão no alinhamento do veículo para dirigir com segurança.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-balance-scale"></i> Balanceamento</div>
+                        <div class="card-back">Rodas balanceadas para evitar vibrações e desgaste irregular de pneus.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-tint"></i> Troca de Fluido de Freio</div>
+                        <div class="card-back">Manutenção completa do sistema de freios garantindo segurança total.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-broom"></i> Limpeza no Sistema de Freios</div>
+                        <div class="card-back">Limpeza completa do sistema de freios para maior eficiência e durabilidade.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ELÉTRICA E DIAGNÓSTICO -->
+            <h3 class="category-title">Elétrica e Diagnóstico</h3>
+            <hr class="category-separator">
+            <div class="cards">
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-bolt"></i> Elétrica e Diagnóstico</div>
+                        <div class="card-back">Diagnóstico completo e manutenção do sistema elétrico do veículo.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-car-battery"></i> Motor de Partida</div>
+                        <div class="card-back">Substituição ou manutenção do motor de partida para garantir o funcionamento do veículo.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-car-battery"></i> Alternador</div>
+                        <div class="card-back">Manutenção ou troca do alternador garantindo carga correta da bateria.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-microchip"></i> Scanner</div>
+                        <div class="card-back">Leitura completa do veículo com scanner para identificar falhas e otimizar manutenção.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-microchip"></i> Sensores</div>
+                        <div class="card-back">Substituição ou manutenção dos sensores do veículo para performance correta.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-microchip"></i> Atuadores</div>
+                        <div class="card-back">Manutenção ou troca de atuadores garantindo funcionamento preciso do motor.</div>
+                    </div>
+                </div>
+                <div class="card-flip">
+                    <div class="card-inner">
+                        <div class="card-front"><i class="fas fa-lightbulb"></i> Iluminação (Farol e Lanternas)</div>
+                        <div class="card-back">Troca e manutenção da iluminação garantindo visibilidade e segurança.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </services>
+
+
+    <!-- CSS ADICIONAL -->
+    <style>
+        /* SEÇÃO DE SERVIÇOS */
+        .services-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .services-sub {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 40px 0 15px 0;
+            color: #c00;
+        }
+
+        .category-separator {
+            width: 80px;
+            height: 3px;
+            background: #c00;
+            border: none;
+            margin: 0 auto 40px auto;
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.8s ease;
+        }
+
+        .section.in-view .category-separator {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        /* MOBILE FIX: evita os cards grudados e melhora o toque */
+        @media (max-width: 768px) {
+            .section .cards,
+            .cards {
+                display: grid;
+                grid-template-columns: 1fr !important; /* 1 card por linha */
+                gap: 25px !important;
+                justify-items: center;
+            }
+
+            .card-flip {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .card-inner {
+                min-height: 220px;
+                height: auto; /* ajusta altura automaticamente */
+            }
+        }
+    </style>
+
+    <!-- Oficina -->
+    <section id="oficina" class="section highlights">
+        <div class="container">
+            <h2 class="section-title">Sua oficina de confiança</h2>
+            <hr class="category-separator">
+            <div class="cards">
+                <div class="card-flip"><div class="card-inner"><div class="card-front"><i class="fas fa-eye"></i> Perspectiva</div><div class="card-back">Visão completa e análise detalhada para cada serviço.</div></div></div>
+
+                <div class="card-flip"><div class="card-inner"><div class="card-front"><i class="fas fa-lightbulb"></i> Criatividade</div><div class="card-back">Soluções inovadoras e personalizadas para cada cliente.</div></div></div>
+
+                <div class="card-flip"><div class="card-inner"><div class="card-front"><i class="fas fa-user-tie"></i> Profissionalismo</div><div class="card-back">Equipe altamente qualificada e comprometida.</div></div></div>
+
+                <div class="card-flip"><div class="card-inner"><div class="card-front"><i class="fas fa-wrench"></i> Serviços</div><div class="card-back">Serviços de alta qualidade e padrão premium.</div></div></div>
+
+                <div class="card-flip"><div class="card-inner"><div class="card-front"><i class="fas fa-tools"></i> Equipamentos de Ponta</div><div class="card-back">Ferramentas modernas e tecnologia de última geração.</div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEPOIMENTOS -->
+    <section id="depoimentos" class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">Depoimentos</h2>
+            <hr class="category-separator">
+            <div class="slider">
+                <div class="slider-track">
+                    <div class="slide">
+                        "Excelente atendimento! Me ajudou desde antes de
+                        eu comprar meu carro, avaliando alguns modelos
+                        para mim e depois que comprei, fazendo todas as
+                        manutenções necessárias. Estou muito satisfeita
+                        com o atendimento do Izael. Ele é um ótimo
+                        profissional, detalhista e dedicado. Os preços
+                        foram justos e a comunicação foi transparente
+                        durante todo o processo. Recomendo o trabalho
+                        de olhos fechados!" — Vanessa Z.
+                    </div>
+                    <div class="slide">
+                        "Recentemente, tive a oportunidade de levar meu carro
+                        a uma oficina chamada 'Garagem Mendes', e não
+                        poderia estar mais satisfeita com o serviço que recebi.
+                        Desde o momento em que entrei, fui recebida pelo
+                        responsável extremamente amigável e profissional. O
+                        ambiente era limpo e bem organizado, o que já me
+                        deu uma boa impressão.
+
+                        O fato de o mecânico ter explicado detalhadamente o
+                        que precisava ser feito e ter mostrado as peças
+                        desgastadas demonstra um compromisso com a
+                        qualidade e a confiança do cliente. A transparência no
+                        atendimento foi um grande diferencial, pois me senti
+                        segura em deixar meu carro nas mãos dele.
+
+                        O serviço foi realizado dentro do prazo prometido, e o
+                        preço foi justo, sem surpresas desagradáveis.
+
+                        Recomendo a 'Garagem Mendes' a todos que
+                        buscam um serviço de qualidade e um atendimento
+                        excepcional. Com certeza, voltarei sempre que
+                        precisar!" — Marli Batista.
+                    </div>
+                    <div class="slide">
+                        "Uma frase que descreve bem, totalmente
+                        profissional.
+
+                        Buscava há algum tempo um profissional qualificado pra
+                        mexer na minha Tiguan Turbo, e finalmente encontrei
+                        a melhor pessoa pra isso. Desde o primeiro contato,
+                        foi totalmente transparente, apresentando o
+                        diagnóstico completo de todas as falhas e, no
+                        decorrer, buscando as melhores formas e peças pra
+                        solucionar os problemas, sempre enviando imagens e
+                        explicando detalhadamente todo o processo, me
+                        passando muita confiança e deixando um resultado
+                        final perfeito. Além disso, deu um talento com uma
+                        lavagem e limpeza completa, além de um brinde
+                        especial. Só tenho a agradecer por ter um
+                        profissional tão qualificado e comprometido com a
+                        excelência. Já fidelizou mais um cliente." — Alison Padilha.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CSS ADICIONAL PARA DEPOIMENTOS -->
+    <style>
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 10px; /* Espaço acima da linha */
+        }
+
+        .category-separator {
+            width: 80px;
+            height: 3px;
+            background: #c00;
+            border: none;
+            margin: 0 auto 40px auto; /* centraliza e espaça abaixo */
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.8s ease;
+        }
+
+        .section.in-view .category-separator {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        /* Estilo dos slides */
+        .slider {
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            padding: 20px;
+            background: rgba(28,28,28,0.8);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+    </style>
+
+
+    <!-- JS ADICIONAL PARA ANIMAÇÃO -->
+    <script>
+        // Linha vermelha animada
+        const separators = document.querySelectorAll('.category-separator');
+        const observerSeparator = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'scaleX(1)';
+                }
+            });
+        }, { threshold: 0.2 });
+        separators.forEach(s => observerSeparator.observe(s));
+    </script>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <h2 class="section-title">Nossa Localização</h2>
+            <hr class="category-separator">
+        </div>
+        <div class="map-responsive">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3604.5730383837094!2d-49.243221923828955!3d-25.3856222311388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce749550d23ed%3A0xc397361616c811ab!2sGaragem%20Mendes!5e0!3m2!1spt-BR!2sbr!4v1762219793263!5m2!1spt-BR!2sbr" ></iframe>
+        </div>
+        <div class="container">
+            <small style="font-size:1rem; color:#fff;">
+                © 2025 Garagem Mendes - Desenvolvido por
+                <a href="https://www.instagram.com/e.grabowski_" target="_blank" class="credit-link">Eduardo Grabowski</a>
+            </small>
+        </div>
+    </footer>
+    <!-- =================== SCRIPT =================== -->
+    <script src="Script1.js?v=20251031" defer></script>
+
+    <style>
+        .credit-link {
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .credit-link::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -2px;
+                width: 0%;
+                height: 1px;
+                background-color: #ffffff; /* linha branca */
+                transition: width 0.3s ease;
+                box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+            }
+
+            .credit-link:hover {
+                color: #ffffff; /* continua branca no hover */
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            }
+
+                .credit-link:hover::after {
+                    width: 100%;
+                }
+    </style>
+
+
+    <!-- LINKS FLUTUANTES -->
+    <div class="floating-links">
+        <a href="https://wa.me/5541995907697" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/garagemmendes" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script>
+        // CARROSSEL HERO
+        document.addEventListener("DOMContentLoaded", () => {
+            const imagens = ["carrolap.png", "pinças.png", "bloco.png", "oleocar.png"];
+            let index = 0;
+            const imgElement = document.getElementById("slide-image");
+            const dotsContainer = document.getElementById("dots");
+            dotsContainer.innerHTML = "";
+            imagens.forEach((_, i) => {
+                const dot = document.createElement("div");
+                dot.classList.add("dot");
+                dot.onclick = () => { index = i; trocarImagem(); };
+                dotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll(".dot");
+            function atualizarDots() { dots.forEach((dot, i) => dot.classList.toggle("active", i === index)); }
+            function trocarImagem() { imgElement.style.opacity = 0; setTimeout(() => { imgElement.src = imagens[index]; imgElement.style.opacity = 1; atualizarDots(); }, 200); }
+            window.proximo = () => { index = (index + 1) % imagens.length; trocarImagem(); }
+            window.anterior = () => { index = (index - 1 + imagens.length) % imagens.length; trocarImagem(); }
+            let intervalo = setInterval(proximo, 4000);
+            const slider = document.querySelector(".hero-card");
+            slider.addEventListener("mouseenter", () => clearInterval(intervalo));
+            slider.addEventListener("mouseleave", () => intervalo = setInterval(proximo, 4000));
+            atualizarDots();
+        });
+
+        // ANIMAÇÃO SEÇÕES
+        const sectionsAndCards = document.querySelectorAll('.section, .hero-left, .hero-card, .card-flip');
+        const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in-view'); }); }, { threshold: 0.2 });
+        sectionsAndCards.forEach(el => observer.observe(el));
+
+        // SLIDER DEPOIMENTOS
+        const track = document.querySelector('.slider-track'); let slideIndex = 0;
+        setInterval(() => { slideIndex++; if (slideIndex >= track.children.length) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 100}%)`; }, 4000);
+
+        // SCROLL SUAVE HEADER
+        document.querySelectorAll('header nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetEl = document.getElementById(targetId);
+                const offsetPosition = targetEl.getBoundingClientRect().top + window.scrollY - document.querySelector('header').offsetHeight - 10;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            });
+        });
+
+        // MOBILE CARD FLIP
+        function isMobile() { return window.innerWidth <= 768; }
+        document.querySelectorAll('.card-flip').forEach(card => {
+            const inner = card.querySelector('.card-inner');
+            card.addEventListener('click', () => { if (isMobile()) { inner.style.transform = inner.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)'; } else { card.classList.toggle('flipped'); } });
+        });
+        window.addEventListener('resize', () => { document.querySelectorAll('.card-flip').forEach(card => { const inner = card.querySelector('.card-inner'); if (!isMobile()) inner.style.transform = ''; }); });
+    </script>
+</body>
+</html>
